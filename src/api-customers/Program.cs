@@ -20,30 +20,32 @@ app.MapOpenApi();
 
 app.UseHttpsRedirection();
 
-// Get all customers
 app.MapGet("/customers", () =>
 {
     return Results.Ok(customers);
-});
+})
+    .WithName("GetAllCustomers")
+    .WithTags("Customers");
 
-// Get customer by ID
 app.MapGet("/customers/{id:int}", (int id) =>
 {
     var customer = customers.FirstOrDefault(c => c.Id == id);
     if (customer is null)
         return Results.NotFound(new { Message = $"Customer with ID {id} not found" });
     return Results.Ok(customer);
-});
+})
+    .WithName("GetCustomerById")
+    .WithTags("Customers");
 
-// Create a new customer
 app.MapPost("/customers", (Customer newCustomer) =>
 {
     newCustomer.Id = customers.Count > 0 ? customers.Max(c => c.Id) + 1 : 1;
     customers.Add(newCustomer);
     return Results.Created($"/customers/{newCustomer.Id}", newCustomer);
-});
+})
+    .WithName("CreateCustomer")
+    .WithTags("Customers");
 
-// Update customer details
 app.MapPut("/customers/{id:int}", (int id, Customer updatedCustomer) =>
 {
     var existingCustomer = customers.FirstOrDefault(c => c.Id == id);
@@ -55,9 +57,10 @@ app.MapPut("/customers/{id:int}", (int id, Customer updatedCustomer) =>
     existingCustomer.Age = updatedCustomer.Age;
 
     return Results.Ok(existingCustomer);
-});
+})
+    .WithName("UpdateCustomer")
+    .WithTags("Customers");
 
-// Delete a customer
 app.MapDelete("/customers/{id:int}", (int id) =>
 {
     var customer = customers.FirstOrDefault(c => c.Id == id);
@@ -66,6 +69,12 @@ app.MapDelete("/customers/{id:int}", (int id) =>
 
     customers.Remove(customer);
     return Results.NoContent();
-});
+})
+    .WithName("DeleteCustomer")
+    .WithTags("Customers");
+
+app.MapGet("/ping", () => Results.Ok("pong"))
+    .WithName("Ping")
+    .WithTags("Customers");
 
 app.Run();
