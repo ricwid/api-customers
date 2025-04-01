@@ -3,6 +3,7 @@ param appName string
 param hostingPlanSkuName string
 param repoUrl string
 param resourceGroupName string
+param apim object
 
 // Resource group for App Service Plan
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -53,14 +54,6 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
           name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
           value: '~3'
         }
-        {   
-          name: 'DUMMY_REPO_URL'
-          value: repoUrl 
-        }
-        {
-          name: 'DUMMY_RESOURCE_GROUP_NAME'
-          value: resourceGroupName 
-        }
       ]
     }
   }
@@ -70,3 +63,10 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
 output webAppUrl string = appService.properties.defaultHostName
 output appInsightsInstrumentationKey string = appInsights.properties.InstrumentationKey
 output appInsightsConnectionString string = appInsights.properties.ConnectionString
+output rUrl string = repoUrl
+output rgName string = resourceGroupName
+output serviceName string = apim.serviceName
+output apiPath string = apim.apiPath
+output apiSpecUrl string = apim.apiSpecUrl
+output apiId string = apim.apiId
+output apiRevision string = apim.apiRevision
