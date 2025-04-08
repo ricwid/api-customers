@@ -9,12 +9,12 @@ var customers = new List<Customer>
 
 var customerEngagements = new List<CustomerEngagements>
 {
-    new CustomerEngagements {Id = 1, Name = "John Doe", Engagements = ["Engagement 1", "Engagement 2"]}
+    new CustomerEngagements {Id = 1, Name = "John Doe", Engagements = ["Bilförsäkring", "Hemförsäkring"]}
 };
 
 var customerEngagements2 = new List<CustomerEngagements2>
 {
-    new CustomerEngagements2 {Id = 10, Name = "John Doe",  Email = "John.Doe@hotmail.com", Engagements = ["Engagement 1", "Engagement 2"] }
+    new CustomerEngagements2 {Id = 10, Name = "John Doe",  Email = "John.Doe@hotmail.com", Engagements = ["Bilförsäkring", "Hemförsäkring"] }
 };
 
 
@@ -34,11 +34,6 @@ app.MapGet("/customers", () => Results.Ok(customers))
     .WithName("GetAllCustomers")
     .WithTags("Customers");
 
-app.MapGet("/customerEngagements", () => { return Results.Ok(customerEngagements2.OrderBy(e => e.Id)); })
-    .WithName("GetAllCustomerEngagements")
-    .WithTags("Customers")
-    .Produces<List<CustomerEngagements>>(200);
-
 app.MapGet("/customers/{id:int}", (int id) =>
     {
         var customer = customers.FirstOrDefault(c => c.Id == id);
@@ -48,6 +43,11 @@ app.MapGet("/customers/{id:int}", (int id) =>
     })
     .WithName("GetCustomerById")
     .WithTags("Customers");
+
+app.MapGet("/customerEngagements", () => { return Results.Ok(customerEngagements2.OrderBy(e => e.Id)); })
+    .WithName("GetAllCustomerEngagements")
+    .WithTags("Customers")
+    .Produces<List<CustomerEngagements>>(200);
 
 app.MapPost("/customers", (Customer newCustomer) =>
     {
