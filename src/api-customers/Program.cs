@@ -7,6 +7,16 @@ var customers = new List<Customer>
     new Customer (1, "Sam Wilson", "sam.wilson@example.com", 35),
 };
 
+var customerEngagements = new List<CustomerEngagements>
+{
+    new CustomerEngagements (1, "John Doe", ["Engagement 1", "Engagement 2"]),
+};
+
+var customerEngagements2 = new List<CustomerEngagements2>
+{
+    new CustomerEngagements2 (1, "John Doe", "John.Doe@hotmail.com", ["Engagement 1", "Engagement 2"]),
+};
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +36,14 @@ app.MapGet("/customers", () =>
 })
     .WithName("GetAllCustomers")
     .WithTags("Customers");
+
+app.MapGet("/customerEngagements", () =>
+    {
+        return Results.Ok(customerEngagements2.OrderBy(e => e.Id));
+    })
+    .WithName("GetAllCustomerEngagements")
+    .WithTags("Customers")
+    .Produces<List<CustomerEngagements>>(200);
 
 app.MapGet("/customers/{id:int}", (int id) =>
 {
