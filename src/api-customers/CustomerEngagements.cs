@@ -1,13 +1,16 @@
-public record CustomerEngagements(int Id, string Name, List<string> Engagements)
+namespace api_customers;
+
+public record CustomerEngagements
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public List<string> Engagements { get; set; } = new List<string>();
+    public required int Id { get; set; }
+    public required string Name { get; set; }
+    public required List<string> Engagements { get; set; } = new List<string>();
 }
 
-public record CustomerEngagements2(int Id, string Name, string Email, List<string> Engagements)
+public record CustomerEngagements2
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public List<string> Engagements { get; set; } = new List<string>();
+    public required int Id { get; set; }
+    public required string Name { get; set; }
+    public required string Email { get; set; }
+    public required List<string> Engagements { get; set; } = new List<string>();
 }
