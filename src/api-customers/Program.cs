@@ -44,7 +44,7 @@ app.MapGet("/customers/{id:int}", (int id) =>
     .WithName("GetCustomerById")
     .WithTags("Customers");
 
-app.MapGet("/customerEngagements", () => { return Results.Ok(customerEngagements.OrderBy(e => e.Id)); })
+app.MapGet("/customerEngagements", () => { return Results.Ok(customerEngagements2.OrderBy(e => e.Id)); })
     .WithName("GetAllCustomerEngagements")
     .WithTags("Customers")
     .Produces<List<CustomerEngagements>>(200);
