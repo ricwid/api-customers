@@ -30,6 +30,10 @@ app.MapOpenApi();
 
 app.UseHttpsRedirection();
 
+app.MapGet("/customerPolicy", () => Results.Ok(customers))
+    .WithName("GetCustomerPolicy")
+    .WithTags("Customers");
+
 app.MapGet("/customers", () => Results.Ok(customers))
     .WithName("GetAllCustomers")
     .WithTags("Customers");
